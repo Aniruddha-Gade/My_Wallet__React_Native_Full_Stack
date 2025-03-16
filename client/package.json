@@ -1,5 +1,5 @@
 {
-  "name": "expense_tracker",
+  "name": "expense_tracker_app",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {

@@ -21,7 +21,7 @@ const Wallet = () => {
     {
       id: "4",
       name: "",
-      credit: 15000,
+      credit: undefined,
       debit: 20000,
       balance: 5000,
       image:
@@ -120,7 +120,7 @@ const Wallet = () => {
         visibility={isOpenModal}
         onClose={() => setIsOpenModal(false)}
         heading={WALLET.ADD_WALLET}
-        modalStyle={{ minHeight: "40%" }}
+        modalStyle={{ minHeight: "80%" }}
       >
         <AddWalletForm />
       </CustomModal>

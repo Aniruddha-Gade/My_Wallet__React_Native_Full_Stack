@@ -11,7 +11,6 @@ type UseAddWalletProps = {
 
 function useAddWallet({ isEdit, walletData }: UseAddWalletProps) {
 
-
     const {
         control,
         handleSubmit,
@@ -21,10 +20,6 @@ function useAddWallet({ isEdit, walletData }: UseAddWalletProps) {
     } = useForm({
         defaultValues: isEdit ? walletData : defaultWalletValues
     });
-
-
-
-    // const params = 
 
 
     const onSubmit = (data: WalletDataType) => {
@@ -37,8 +32,12 @@ function useAddWallet({ isEdit, walletData }: UseAddWalletProps) {
         }
     };
 
+    const onDeleteWallet = async () => {
+        console.log('deleting wallet')
+    }
+
     return {
-        control, handleSubmit, reset, onSubmit,
+        control, handleSubmit, reset, onSubmit, onDeleteWallet
     }
 }
 

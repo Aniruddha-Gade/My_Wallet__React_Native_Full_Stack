@@ -27,11 +27,13 @@ export const HOME = {
 
 export const WALLET = {
     TOTAL_BALANCE: 'Total Balance',
-    MY_WALLETS:'My Wallets',
-    ADD_WALLET:'Add Wallet',
-    WALLET_NAME:'Wallet Name',
-    ENTER_WALLET_NAME:'Enter wallet name',
-    ADD:'Add',
-UPDATE:'Update'
-
+    MY_WALLETS: 'My Wallets',
+    ADD_WALLET: 'Add Wallet',
+    WALLET_NAME: 'Wallet Name',
+    ENTER_WALLET_NAME: 'Enter wallet name',
+    UPDATE_WALLET: 'Update Wallet',
+    WALLET_NAME_NOT_FOUND: 'Wallet name not found',
+    CREDIT: 'Credit',
+    DEBIT: 'Debit',
+    BALANCE: 'Balance',
 }

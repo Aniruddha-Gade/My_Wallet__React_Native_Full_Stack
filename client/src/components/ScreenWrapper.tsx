@@ -5,7 +5,7 @@ import { ScreenWrapperProps } from "@/src/types/types";
 import { Color } from "@/src/constants/theme";
 
 const ScreenWrapper = ({ style, children }: Readonly<ScreenWrapperProps>) => {
-  const paddingTop = Platform.OS === "ios" ? HEIGHT * 0.06 : 30;
+  const paddingTop = Platform.OS === "ios" ? HEIGHT * 0.06 : 10;
   return (
     <View
       style={[

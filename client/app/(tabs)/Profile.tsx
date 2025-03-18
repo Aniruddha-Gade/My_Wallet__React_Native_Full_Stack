@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import ScreenWrapper from "@/src/components/ScreenWrapper";
 import { Color, radius, spacingX, spacingY } from "@/src/constants/theme";
@@ -84,7 +84,7 @@ const Profile = () => {
 
         {/* acccount options */}
         {isArrayLength(AccountOptions) && (
-          <View style={styles.accountOptions}>
+          <ScrollView style={styles.accountOptions}>
             {AccountOptions.map((item, index) => {
               if (!item?.title) return null; // Skip if title is empty
 
@@ -122,7 +122,7 @@ const Profile = () => {
                 </Animated.View>
               );
             })}
-          </View>
+          </ScrollView>
         )}
       </View>
     </ScreenWrapper>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacingX._20,
   },
   userInfo: {
-    marginTop: verticalScale(30),
+    marginTop: verticalScale(10),
     alignItems: "center",
     gap: spacingY._15,
   },
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     marginBottom: verticalScale(17),
   },
   accountOptions: {
-    marginTop: spacingY._35,
+    marginTop: spacingY._20,
   },
   flexRow: {
     flexDirection: "row",

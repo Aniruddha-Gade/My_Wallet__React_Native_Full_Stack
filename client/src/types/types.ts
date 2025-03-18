@@ -98,3 +98,12 @@ export type WalletType = {
   uid?: string;
   created?: Date;
 };
+
+export type SelectImageProps = {
+  file?: any;
+  onSelect: (file: any) => void;
+  onClear: () => void;
+  containerStyle?: ViewStyle;
+  imageStyle?: ViewStyle;
+  placeholder?: string;
+};

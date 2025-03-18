@@ -12,6 +12,7 @@ const CustomButton = ({
   onPress,
   loading = false,
   textProps,
+  disabled = false,
 }: CustomButtonProps) => {
   if (loading) {
     return (
@@ -21,7 +22,7 @@ const CustomButton = ({
     );
   }
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.button, style]}>
+    <TouchableOpacity onPress={onPress} style={[styles.button, style]} disabled={disabled}>
       <Typo fontWeight={"500"} {...textProps}>
         {text}
       </Typo>

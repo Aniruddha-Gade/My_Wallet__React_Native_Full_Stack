@@ -22,7 +22,8 @@ export interface CustomButtonProps extends TouchableOpacityProps {
   style?: ViewStyle;
   onPress?: () => void;
   loading?: boolean;
-  textProps?: {}
+  textProps?: {};
+  disabled?: boolean;
 }
 
 export type ActivityIndicatorProps = {
@@ -84,4 +85,16 @@ export type ModalPropsType = ModalProps & {
 export type WalletDataType = {
   walletName: string;
   image: string;
+};
+
+
+export type WalletType = {
+  id?: string;
+  name: string;
+  credit?: number;
+  debit?: number;
+  balance?: number;
+  image: any;
+  uid?: string;
+  created?: Date;
 };

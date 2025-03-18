@@ -60,7 +60,7 @@ const CustomModal = ({
       onRequestClose={onClose}
       {...rest}
     >
-      <Pressable style={styles.overlay} onPress={onClose}>
+      <Pressable style={styles.overlay}>
         {withInput ? (
           <KeyboardAvoidingView
             style={styles.centeredView}

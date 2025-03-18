@@ -45,7 +45,7 @@ const Profile = () => {
 
   return (
     <ScreenWrapper>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Header title="Profile" leftIcon={<BackButton />} />
 
         {/* user info */}
@@ -84,7 +84,7 @@ const Profile = () => {
 
         {/* acccount options */}
         {isArrayLength(AccountOptions) && (
-          <ScrollView style={styles.accountOptions}>
+          <View style={styles.accountOptions}>
             {AccountOptions.map((item, index) => {
               if (!item?.title) return null; // Skip if title is empty
 
@@ -122,9 +122,9 @@ const Profile = () => {
                 </Animated.View>
               );
             })}
-          </ScrollView>
+          </View>
         )}
-      </View>
+      </ScrollView>
     </ScreenWrapper>
   );
 };

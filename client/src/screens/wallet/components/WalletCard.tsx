@@ -6,10 +6,30 @@ import { verticalScale } from "@/src/utils/styling";
 import { WalletType } from "@/src/types/types";
 import { CustomIcon } from "@/src/components/common/CustomIcon";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { notEmpty, notNullUndefined } from "@/src/utils/validation";
+import { WALLET } from "@/src/constants/Labels";
+import Typo from "@/src/components/common/Typo";
 
 type WalletCardProps = {
   wallet: WalletType;
   index: number;
+};
+
+const AmountBox = ({
+  amount,
+  title,
+}: {
+  amount: number | undefined;
+  title: string;
+}) => {
+  return (
+    <View style={styles.amountBox}>
+      <Text style={styles.label}>{title}</Text>
+      {notNullUndefined(amount) && (
+        <Text style={styles.creditAmount}>₹{amount}</Text>
+      )}
+    </View>
+  );
 };
 
 const WalletCard = ({ wallet, index }: Readonly<WalletCardProps>) => {
@@ -18,7 +38,14 @@ const WalletCard = ({ wallet, index }: Readonly<WalletCardProps>) => {
       <TouchableOpacity style={styles.card}>
         {/* Header - Wallet Name & Actions */}
         <View style={styles.header}>
-          <Text style={styles.walletName}>{wallet?.name}</Text>
+          {notEmpty(wallet?.name) ? (
+            <Typo fontWeight="600">{wallet?.name}</Typo>
+          ) : (
+            <Typo fontWeight="600" color={Color.red}>
+              {WALLET.WALLET_NAME_NOT_FOUND}
+            </Typo>
+          )}
+          {/* edit / delete button */}
           <View style={styles.actionButtons}>
             <TouchableOpacity
               style={[styles.iconButton, { backgroundColor: Color.green_2 }]}
@@ -55,20 +82,9 @@ const WalletCard = ({ wallet, index }: Readonly<WalletCardProps>) => {
 
         {/* Amount Details - Debit, Credit & Balance */}
         <View style={styles.amountDetails}>
-          <View style={styles.amountBox}>
-            <Text style={styles.label}>Credit</Text>
-            <Text style={styles.creditAmount}>₹{wallet?.credit}</Text>
-          </View>
-
-          <View style={styles.amountBox}>
-            <Text style={styles.label}>Debit</Text>
-            <Text style={styles.debitAmount}>₹{wallet?.debit}</Text>
-          </View>
-
-          <View style={styles.amountBox}>
-            <Text style={styles.label}>Balance</Text>
-            <Text style={styles.balanceAmount}>₹{wallet?.balance}</Text>
-          </View>
+          <AmountBox title={WALLET.CREDIT} amount={wallet?.credit} />
+          <AmountBox title={WALLET.DEBIT} amount={wallet?.debit} />
+          <AmountBox title={WALLET.BALANCE} amount={wallet?.balance} />
         </View>
       </TouchableOpacity>
     </Animated.View>
@@ -95,11 +111,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  walletName: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: Color.white,
-  },
   actionButtons: {
     flexDirection: "row",
     gap: spacingX._7,
@@ -111,7 +122,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     // marginTop: spacingX._12,
-    height: verticalScale(90),
+    height: verticalScale(150),
     width: "100%",
     borderRadius: radius._12,
     overflow: "hidden",
@@ -123,11 +134,11 @@ const styles = StyleSheet.create({
   amountDetails: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // marginTop: spacingX._12,
   },
   amountBox: {
     backgroundColor: Color.neutral700,
-    padding: verticalScale(12),
+    padding: verticalScale(13),
+    paddingHorizontal: verticalScale(3),
     borderRadius: radius._12,
     width: "32%",
     alignItems: "center",

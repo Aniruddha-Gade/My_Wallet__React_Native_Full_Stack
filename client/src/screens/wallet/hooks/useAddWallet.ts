@@ -16,7 +16,8 @@ function useAddWallet({ isEdit, walletData }: UseAddWalletProps) {
         handleSubmit,
         formState: { errors },
         reset,
-        watch
+        watch,
+        setValue
     } = useForm({
         defaultValues: isEdit ? walletData : defaultWalletValues
     });
@@ -37,7 +38,7 @@ function useAddWallet({ isEdit, walletData }: UseAddWalletProps) {
     }
 
     return {
-        control, handleSubmit, reset, onSubmit, onDeleteWallet
+        control, handleSubmit, reset, onSubmit, onDeleteWallet, watch, setValue
     }
 }
 

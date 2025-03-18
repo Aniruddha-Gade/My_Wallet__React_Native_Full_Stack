@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Controller } from "react-hook-form";
 import useAddWallet from "../hooks/useAddWallet";
@@ -10,6 +10,7 @@ import CustomButton from "@/src/components/common/CustomButton";
 import { defaultWalletValues } from "../constants";
 import { WalletDataType } from "@/src/types/types";
 import { verticalScale } from "@/src/utils/styling";
+import SelectImage from "@/src/components/common/SelectImage";
 
 type AddWalletForm = {
   isEdit?: boolean;
@@ -20,10 +21,11 @@ const AddWalletForm = ({
   isEdit = false,
   walletData = defaultWalletValues,
 }: Readonly<AddWalletForm>) => {
-  const { control, handleSubmit, onSubmit, onDeleteWallet } = useAddWallet({
-    isEdit,
-    walletData,
-  });
+  const { control, handleSubmit, onSubmit, onDeleteWallet, watch, setValue } =
+    useAddWallet({
+      isEdit,
+      walletData,
+    });
 
   return (
     <View style={styles.formContainer}>
@@ -51,9 +53,30 @@ const AddWalletForm = ({
         )}
       />
 
+      {/* image */}
+      <Controller
+        control={control}
+        name="image"
+        render={({ field: { value, onChange } }) => (
+          <View>
+            <SelectImage
+              file={value}
+              onSelect={onChange}
+              onClear={() => onChange("")}
+              placeholder="Uploada an image"
+              containerStyle={{ height: verticalScale(250) }}
+              imageStyle={{ width: "100%", height: verticalScale(250) }}
+            />
+          </View>
+        )}
+      />
+
       <View style={styles.footer}>
         {isEdit && (
-          <TouchableOpacity style={styles.deleteButton} onPress={onDeleteWallet}>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={onDeleteWallet}
+          >
             <CustomIcon
               name="delete"
               icon="AntDesign"
@@ -81,10 +104,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     // height:'100%',
     flex: 1,
+    gap: 10,
   },
   deleteButton: {
     backgroundColor: Color.red,
-    // padding: verticalScale(5),
     borderRadius: radius._10,
     paddingHorizontal: spacingX._15,
     alignItems: "center",
@@ -92,8 +115,11 @@ const styles = StyleSheet.create({
   },
   footer: {
     flexDirection: "row",
-    // alignItems: "center",
     justifyContent: "space-between",
     gap: 10,
+  },
+  image: {
+    width: 200,
+    height: 200,
   },
 });

@@ -46,7 +46,7 @@ const Profile = () => {
   return (
     <ScreenWrapper>
       <ScrollView style={styles.container}>
-        <Header title="Profile" leftIcon={<BackButton />} />
+        <Header leftIcon={<BackButton />} />
 
         {/* user info */}
         <View style={styles.userInfo}>

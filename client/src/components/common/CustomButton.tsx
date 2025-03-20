@@ -22,7 +22,11 @@ const CustomButton = ({
     );
   }
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.button, style]} disabled={disabled}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.button, style, { opacity: disabled ? 0.5 : 1 }]}
+      disabled={disabled}
+    >
       <Typo fontWeight={"500"} {...textProps}>
         {text}
       </Typo>

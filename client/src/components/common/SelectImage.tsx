@@ -57,8 +57,8 @@ function SelectImage({
             <CustomIcon
               name="delete"
               icon="AntDesign"
-              color={Color.white}
-              size={verticalScale(24)}
+              color={Color.black}
+              size={verticalScale(20)}
             />
           </TouchableOpacity>
         </View>
@@ -96,9 +96,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 1,
     shadowRadius: 10,
-    backgroundColor: Color.red,
+    backgroundColor: Color.neutral100,
     padding: verticalScale(5),
-    borderRadius: radius._10,
+    borderRadius: radius._6,
   },
 });
 

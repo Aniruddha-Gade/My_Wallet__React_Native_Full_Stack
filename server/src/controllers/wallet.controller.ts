@@ -23,3 +23,27 @@ export const createWallet = async (req: Request, res: Response) => {
         return res.status(500).json({ success: false, message: "Error while creating wallet" });
     }
 };
+
+
+
+// ========================= GET WALLETS =========================
+export const getWallets = async (req: Request, res: Response) => {
+    try {
+
+        // Find all wallets
+        const wallets = await WalletModel.find({ userId: req.user._id });
+        if (!wallets) {
+            return res.status(400).json({ message: "Wallets not found" });
+        }
+
+        return res.status(200).json({
+            wallets,
+            success: true,
+            message: "All Wallets fetched successfully"
+        })
+    } catch (error) {
+        console.error("Error while fetching all wallets:", error);
+        return res.status(500).json({ success: false, message: "Error while fetching all wallets" });
+    }
+};
+

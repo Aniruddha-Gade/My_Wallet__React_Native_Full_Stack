@@ -90,7 +90,7 @@ export const getWalletSummary = async (req: Request, res: Response) => {
         let totalDebit = 0, totalCredit = 0;
         transactions?.forEach(txn => {
             if (txn?.type === "debit") totalDebit += Number(txn?.amount);
-            else totalCredit += Number(txn?.amount);
+            else if (txn?.type === "credit") totalCredit += Number(txn?.amount);
         });
 
         const balance = totalCredit - totalDebit;
@@ -105,5 +105,52 @@ export const getWalletSummary = async (req: Request, res: Response) => {
     } catch (error) {
         console.error("Error while fetching wallet summary:", error);
         return res.status(500).json({ success: false, message: "Error while fetching wallet summary" });
+    }
+};
+
+
+
+
+
+// ========================= GET WALLET SUMMARY =========================
+export const getAllWalletsSummary = async (req: Request, res: Response) => {
+    try {
+        const userId = req.user._id;
+
+        // Get all wallet IDs of the user
+        const wallets = await WalletModel.find({ userId }, "_id"); // Fetch only _id fields
+        const walletIds = wallets?.map(wallet => wallet?._id);
+
+        if (walletIds?.length === 0) {
+            return res.status(404).json({ message: "No wallets found for this user" });
+        }
+
+        // Find all transactions of the user's wallets
+        const transactions = await TransactionModel.find({ walletId: { $in: walletIds } });
+
+        if (transactions?.length === 0) {
+            return res.status(404).json({ message: "No transactions found" });
+        }
+
+        // Calculate total credit, debit, and balance
+        let totalDebit = 0, totalCredit = 0;
+
+        transactions?.forEach(txn => {
+            if (txn?.type === "debit") totalDebit += Number(txn?.amount);
+            else if (txn?.type === "credit") totalCredit += Number(txn?.amount);
+        });
+
+        const balance = totalCredit - totalDebit;
+
+        return res.status(200).json({
+            success: true,
+            message: "All Wallet summary fetched successfully",
+            totalDebit,
+            totalCredit,
+            balance,
+        });
+    } catch (error) {
+        console.error("Error while fetching all wallet summary:", error);
+        return res.status(500).json({ success: false, message: "Error while fetching all wallet summary" });
     }
 };

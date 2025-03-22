@@ -90,7 +90,7 @@ export type WalletDataType = {
 
 export type WalletType = {
   id?: string;
-  name: string;
+  walletName: string;
   credit?: number;
   debit?: number;
   balance?: number;

@@ -38,3 +38,32 @@ export const createTransaction = async (req: Request, res: Response) => {
     }
 
 }
+
+
+
+// ========================= GET WALLET TRANSACTION =========================
+export const getWalletTransactions = async (req: Request, res: Response) => {
+    try {
+        const { walletId } = req.params;
+        const userId = req.user._id;
+
+        if (!walletId) {
+            return res.status(400).json({ message: "walletId is required" });
+        }
+
+        // Find all transactions of wallet with specific user
+        const transactions = await TransactionModel.find({ walletId, userId }).sort({ date: -1 });
+        if (!transactions) {
+            return res.status(404).json({ message: "Transactions not found" });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Transaction fetched successfully",
+            transactions,
+        })
+    } catch (error) {
+        console.error("Error while fetching transactions:", error);
+        return res.status(500).json({ success: false, message: "Error while fetching transactions" });
+    }
+};

@@ -67,3 +67,43 @@ export const getWalletTransactions = async (req: Request, res: Response) => {
         return res.status(500).json({ success: false, message: "Error while fetching transactions" });
     }
 };
+
+
+
+
+// ========================= GET WALLET SUMMARY =========================
+export const getWalletSummary = async (req: Request, res: Response) => {
+    try {
+        const { walletId } = req.params;
+        const userId = req.user._id;
+
+        if (!walletId) {
+            return res.status(400).json({ message: "walletId is required" });
+        }
+
+        // Find all transactions of wallet with specific user
+        const transactions = await TransactionModel.find({ walletId, userId });
+        if (!transactions) {
+            return res.status(404).json({ message: "Transactions not found" });
+        }
+
+        let totalDebit = 0, totalCredit = 0;
+        transactions?.forEach(txn => {
+            if (txn?.type === "debit") totalDebit += Number(txn?.amount);
+            else totalCredit += Number(txn?.amount);
+        });
+
+        const balance = totalCredit - totalDebit;
+
+        return res.status(200).json({
+            success: true,
+            message: "Wallet summary fetched successfully",
+            totalDebit,
+            totalCredit,
+            balance,
+        })
+    } catch (error) {
+        console.error("Error while fetching wallet summary:", error);
+        return res.status(500).json({ success: false, message: "Error while fetching wallet summary" });
+    }
+};

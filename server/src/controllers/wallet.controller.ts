@@ -47,3 +47,48 @@ export const getWallets = async (req: Request, res: Response) => {
     }
 };
 
+
+
+
+// ========================= UPDATE WALLETS =========================
+type IUpdateWalletBody = {
+    walletId: string,
+    name: string,
+    image: string
+}
+type IToUpdateData = {
+    name?: string,
+    image?: string
+}
+export const updateWallet = async (req: Request, res: Response) => {
+    try {
+        const { walletId, name, image } = req.body as IUpdateWalletBody;
+        if (!walletId) {
+            return res.status(400).json({ message: "WalletId is required" });
+        }
+
+        const toUpdateData: IToUpdateData = {}
+        if (name) toUpdateData.name = name;
+        if (image) toUpdateData.image = image;
+
+
+        // Find all wallets
+        const wallet = await WalletModel.findOneAndUpdate(
+            { _id: walletId, userId: req.user._id },
+            { $set: toUpdateData },
+            { new: true }
+        );
+        if (!wallet) {
+            return res.status(404).json({ message: "Wallet not found to update" });
+        }
+
+        return res.status(200).json({
+            wallet,
+            success: true,
+            message: "Wallet updated successfully"
+        })
+    } catch (error) {
+        console.error("Error while updating wallet :", error);
+        return res.status(500).json({ success: false, message: "Error while updating wallet" });
+    }
+};
